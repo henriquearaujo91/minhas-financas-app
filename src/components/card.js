@@ -1,56 +1,11 @@
 import React from "react";
-import FormGroup from "./form-group";
 
 class Card extends React.Component {
-  state = {
-    email: "",
-    senha: "",
-  };
-
-  entrar = () => {
-    console.log("Email: ", this.state.email);
-    console.log("Senha: ", this.state.senha);
-  };
-
   render() {
     return (
       <div className="card mb-3">
         <h3 className="card-header">{this.props.title}</h3>
-        <div className="card-body">
-          <div class="row">
-            <div className="col-lg-12">
-              <div className="bs-component">
-                <fieldset>
-                  <FormGroup label="Email: *" htmlFor="exampleInputEmail1">
-                    <input
-                      type="email"
-                      value={this.state.email}
-                      onChange={(e) => this.setState({ email: e.target.value })}
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Digite o Email"
-                    />
-                  </FormGroup>
-                  <FormGroup label="Senha: *" htmlFor="exampleInputPassword1">
-                    <input
-                      type="password"
-                      value={this.state.senha}
-                      onChange={(e) => this.setState({ senha: e.target.value })}
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Password"
-                    />
-                  </FormGroup>
-                  <button onClick={this.entrar} className="btn btn-success">
-                    Entrar
-                  </button>
-                  <button className="btn btn-danger">Cadastrar</button>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="card-body">{this.props.children}</div>
       </div>
     );
   }
