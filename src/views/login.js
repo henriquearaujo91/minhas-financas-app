@@ -1,8 +1,8 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import UsuarioService from "../app/service/usuarioService";
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
 
 class Login extends React.Component {
   state = {
@@ -11,9 +11,14 @@ class Login extends React.Component {
     mensagemErro: null,
   };
 
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+  }
+
   entrar = () => {
-    axios
-      .post("http://localhost:8080/api/usuarios/autenticar", {
+    this.service
+      .autenticar({
         email: this.state.email,
         senha: this.state.senha,
       })
