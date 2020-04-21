@@ -18,6 +18,7 @@ class Login extends React.Component {
         senha: this.state.senha,
       })
       .then((response) => {
+        localStorage.setItem("_usuario_logado", JSON.stringify(response.data));
         this.props.history.push("/home");
       })
       .catch((erro) => {
