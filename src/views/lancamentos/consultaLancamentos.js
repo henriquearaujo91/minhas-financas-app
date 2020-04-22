@@ -1,5 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import LancamentoService from "../../app/service/lancamentoService";
+import LocalStorageService from "../../app/service/localStorageService";
 import Card from "../../components/card";
 import FormGroup from "../../components/form-group";
 import SelectMenu from "../../components/selectMenu";
@@ -10,10 +12,32 @@ class ConsultaLancamentos extends React.Component {
     ano: "",
     mes: "",
     tipo: "",
+    lancamentos: [],
   };
 
+  constructor() {
+    super();
+    this.service = new LancamentoService();
+  }
+
   buscar = () => {
-    console.log(this.state);
+    const usuarioLogado = LocalStorageService.obterItem("_usuario_logado");
+
+    const lancamentoFiltro = {
+      ano: this.state.ano,
+      mes: this.state.mes,
+      tipo: this.state.tipo,
+      usuario: usuarioLogado.id,
+    };
+
+    this.service
+      .consultar(lancamentoFiltro)
+      .then((resposta) => {
+        this.setState({ lancamentos: resposta.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -37,17 +61,6 @@ class ConsultaLancamentos extends React.Component {
       { label: "Selecione...", value: "" },
       { label: "Despesa", value: "DESPESA" },
       { label: "Receita", value: "RECEITA" },
-    ];
-
-    const lancamentos = [
-      {
-        id: 1,
-        descricao: "salario",
-        valor: 5000,
-        tipo: "Receita",
-        mes: 1,
-        status: "Efetivado",
-      },
     ];
 
     return (
@@ -100,7 +113,7 @@ class ConsultaLancamentos extends React.Component {
         <br />
         <div className="rol">
           <div className="bs-component">
-            <LancamentosTable lancamentos={lancamentos} />
+            <LancamentosTable lancamentos={this.state.lancamentos} />
           </div>
         </div>
       </Card>
