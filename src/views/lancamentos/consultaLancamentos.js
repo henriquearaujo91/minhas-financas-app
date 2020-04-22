@@ -6,6 +6,16 @@ import SelectMenu from "../../components/selectMenu";
 import LancamentosTable from "./lancamentosTable";
 
 class ConsultaLancamentos extends React.Component {
+  state = {
+    ano: "",
+    mes: "",
+    tipo: "",
+  };
+
+  buscar = () => {
+    console.log(this.state);
+  };
+
   render() {
     const meses = [
       { label: "Selecione...", value: "" },
@@ -50,17 +60,35 @@ class ConsultaLancamentos extends React.Component {
                   type="text"
                   className="form-control"
                   id="inputAno"
-                  aria-describedby="emailHelp"
+                  value={this.state.ano}
                   placeholder="Digite o Ano"
+                  onChange={(e) => this.setState({ ano: e.target.value })}
                 />
               </FormGroup>
+
               <FormGroup label="Mês: *" htmlFor="inputMes">
-                <SelectMenu className="form-control" lista={meses} />
+                <SelectMenu
+                  className="form-control"
+                  lista={meses}
+                  value={this.state.mes}
+                  onChange={(e) => this.setState({ mes: e.target.value })}
+                />
               </FormGroup>
+
               <FormGroup label="Tipo de Lançamento: " htmlFor="inputTipo">
-                <SelectMenu className="form-control" lista={tipos} />
+                <SelectMenu
+                  className="form-control"
+                  lista={tipos}
+                  value={this.state.tipo}
+                  onChange={(e) => this.setState({ tipo: e.target.value })}
+                />
               </FormGroup>
-              <button type="button" className="btn btn-success">
+
+              <button
+                onClick={this.buscar}
+                type="button"
+                className="btn btn-success"
+              >
                 Buscar
               </button>
               <button type="button" className="btn btn-danger">
