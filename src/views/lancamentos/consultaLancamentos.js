@@ -5,9 +5,8 @@ import LocalStorageService from "../../app/service/localStorageService";
 import Card from "../../components/card";
 import FormGroup from "../../components/form-group";
 import SelectMenu from "../../components/selectMenu";
-import LancamentosTable from "./lancamentosTable";
-
 import * as messages from "../../components/toastr";
+import LancamentosTable from "./lancamentosTable";
 
 class ConsultaLancamentos extends React.Component {
   state = {
@@ -53,9 +52,26 @@ class ConsultaLancamentos extends React.Component {
     console.log("editando", id);
   };
 
-  deletar = (id) => {
-    console.log("deletando", id);
+  deletar = (lancamento) => {
+    this.service
+      .deletar(lancamento.id)
+      .then((response) => {
+        this.removerDaLista(lancamento);
+        messages.mensagemSucesso("Lançamento deletado com sucesso.");
+      })
+      .catch((error) => {
+        messages.mensagemErro(
+          "Ocorreu um erro ao tentar deletar o lançamento."
+        );
+      });
   };
+
+  removerDaLista(lancamento) {
+    const lancamentos = this.state.lancamentos;
+    const index = this.state.lancamentos.indexOf(lancamento);
+    this.state.lancamentos.splice(index, 1);
+    this.setState(lancamentos);
+  }
 
   render() {
     const meses = this.service.obterListaMeses();

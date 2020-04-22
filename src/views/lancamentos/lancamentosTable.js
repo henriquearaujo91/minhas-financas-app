@@ -16,14 +16,14 @@ export default (props) => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={(e) => props.editAction(lancamento.id)}
+            onClick={(e) => props.editAction(lancamento)}
           >
             Editar
           </button>
           <button
             type="button"
             className="btn btn-danger"
-            onClick={(e) => props.deleteAction(lancamento.id)}
+            onClick={(e) => props.deleteAction(lancamento)}
           >
             Deletar
           </button>
