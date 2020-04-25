@@ -55,6 +55,11 @@ class CadastroLancamentos extends React.Component {
     this.setState({ [name]: value });
   };
 
+  componentDidMount() {
+    const params = this.props.match.params;
+    console.log("params: ", params);
+  }
+
   render() {
     const tipos = this.service.obterListaTipos();
     const meses = this.service.obterListaMeses();
@@ -146,7 +151,9 @@ class CadastroLancamentos extends React.Component {
               </button>
               <button
                 className="btn btn-danger"
-                onClick={(e) => this.props.history.push("/consulta-lancamentos")}
+                onClick={(e) =>
+                  this.props.history.push("/consulta-lancamentos")
+                }
               >
                 Cancelar
               </button>
