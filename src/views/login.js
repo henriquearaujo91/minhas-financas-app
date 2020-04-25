@@ -79,13 +79,13 @@ class Login extends React.Component {
                         />
                       </FormGroup>
                       <button onClick={this.entrar} className="btn btn-success">
-                        Entrar
+                        <i className="pi pi-sign-in"></i> Entrar
                       </button>
                       <button
                         onClick={this.prepareCadastrar}
                         className="btn btn-danger"
                       >
-                        Cadastrar
+                        <i className="pi pi-plus"></i> Cadastrar
                       </button>
                     </fieldset>
                   </div>

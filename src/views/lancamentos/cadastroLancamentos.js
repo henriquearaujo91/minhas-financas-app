@@ -207,11 +207,11 @@ class CadastroLancamentos extends React.Component {
             <div>
               {this.state.atualizando ? (
                 <button className="btn btn-primary" onClick={this.atualizar}>
-                  Atualizar
+                  <i className="pi pi-refresh"></i> Atualizar
                 </button>
               ) : (
                 <button className="btn btn-success" onClick={this.submit}>
-                  Salvar
+                  <i className="pi pi-save"></i> Salvar
                 </button>
               )}
               <button
@@ -220,7 +220,7 @@ class CadastroLancamentos extends React.Component {
                   this.props.history.push("/consulta-lancamentos")
                 }
               >
-                Cancelar
+                <i className="pi pi-times"></i> Cancelar
               </button>
             </div>
           </div>
