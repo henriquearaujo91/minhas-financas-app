@@ -1,21 +1,18 @@
 import React from "react";
-import { Route, Switch, HashRouter, Redirect } from "react-router-dom";
-import Login from "../views/login";
+import { HashRouter, Redirect, Route, Switch } from "react-router-dom";
+import AuthService from "../app/service/authService";
 import CadastroUsuario from "../views/cadastroUsuario";
 import Home from "../views/home";
-import ConsultaLancamentos from "../views/lancamentos/consultaLancamentos";
 import CadastroLancamentos from "../views/lancamentos/cadastroLancamentos";
-
-const isUsuarioAutenticado = () => {
-  return false;
-};
+import ConsultaLancamentos from "../views/lancamentos/consultaLancamentos";
+import Login from "../views/login";
 
 function RotaAutenticada({ component: Component, ...props }) {
   return (
     <Route
       {...props}
       render={(componentProps) => {
-        if (isUsuarioAutenticado()) {
+        if (AuthService.isUsuarioAutenticado()) {
           return <Component {...componentProps} />;
         } else {
           return (
