@@ -19,7 +19,9 @@ class CadastroLancamentos extends React.Component {
     tipo: "",
     status: "",
     usuario: null,
+    atualizando: false,
   };
+
   constructor() {
     super();
     this.service = new LancamentoService();
@@ -50,8 +52,26 @@ class CadastroLancamentos extends React.Component {
   };
 
   atualizar = () => {
-    const { descricao, mes, ano, valor, tipo,status, id, usuario } = this.state;
-    const lancamento = {descricao, mes, ano, valor, tipo, status, id, usuario};
+    const {
+      descricao,
+      mes,
+      ano,
+      valor,
+      tipo,
+      status,
+      id,
+      usuario,
+    } = this.state;
+    const lancamento = {
+      descricao,
+      mes,
+      ano,
+      valor,
+      tipo,
+      status,
+      id,
+      usuario,
+    };
 
     this.service
       .atualizar(lancamento)
@@ -77,7 +97,7 @@ class CadastroLancamentos extends React.Component {
       this.service
         .obterPorId(params.id)
         .then((response) => {
-          this.setState({ ...response.data });
+          this.setState({ ...response.data, atualizando: true });
         })
         .catch((error) => {
           messages.mensagemErro(error.response.data);
@@ -90,7 +110,13 @@ class CadastroLancamentos extends React.Component {
     const meses = this.service.obterListaMeses();
 
     return (
-      <Card title="Cadastro de Lançamentos">
+      <Card
+        title={
+          this.state.atualizando
+            ? "Atualização de Lançamento"
+            : "Cadastro de Lançamento"
+        }
+      >
         <div className="row">
           <div className="col-md-12">
             <FormGroup id="inputDescricao" label="Descrição: *">
@@ -171,12 +197,15 @@ class CadastroLancamentos extends React.Component {
         <div className="row">
           <div className="col-md-6">
             <div>
-              <button className="btn btn-success" onClick={this.submit}>
-                Salvar
-              </button>
-              <button className="btn btn-primary" onClick={this.atualizar}>
-                Atualizar
-              </button>
+              {this.state.atualizando ? (
+                <button className="btn btn-primary" onClick={this.atualizar}>
+                  Atualizar
+                </button>
+              ) : (
+                <button className="btn btn-success" onClick={this.submit}>
+                  Salvar
+                </button>
+              )}
               <button
                 className="btn btn-danger"
                 onClick={(e) =>
