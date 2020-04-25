@@ -56,7 +56,7 @@ class ConsultaLancamentos extends React.Component {
   };
 
   editar = (lancamento) => {
-    this.props.history.push(`/cadastro-lancamentos/${lancamento.id}`)
+    this.props.history.push(`/cadastro-lancamentos/${lancamento.id}`);
   };
 
   abrirConfirmacao = (lancamento) => {
@@ -90,6 +90,19 @@ class ConsultaLancamentos extends React.Component {
 
   preparaFormularioCadastro = () => {
     this.props.history.push("/cadastro-lancamentos");
+  };
+
+  alterarStatus = (lancamento, status) => {
+    this.service.alterarStatus(lancamento.id, status).then((respose) => {
+      const lancamentos = this.state.lancamentos;
+      const index = lancamentos.indexOf(lancamento);
+      if (index !== -1) {
+        lancamento["status"] = status;
+        lancamentos[index] = lancamento;
+        this.setState({ lancamento });
+      }
+      messages.mensagemSucesso("Status atualizado com sucesso.");
+    });
   };
 
   render() {
@@ -176,6 +189,7 @@ class ConsultaLancamentos extends React.Component {
               lancamentos={this.state.lancamentos}
               deleteAction={this.abrirConfirmacao}
               editAction={this.editar}
+              alterarStatus={this.alterarStatus}
             />
           </div>
         </div>
