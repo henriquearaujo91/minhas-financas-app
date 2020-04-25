@@ -18,6 +18,7 @@ class CadastroLancamentos extends React.Component {
     valor: "",
     tipo: "",
     status: "",
+    usuario: null,
   };
   constructor() {
     super();
@@ -48,6 +49,21 @@ class CadastroLancamentos extends React.Component {
       });
   };
 
+  atualizar = () => {
+    const { descricao, mes, ano, valor, tipo,status, id, usuario } = this.state;
+    const lancamento = {descricao, mes, ano, valor, tipo, status, id, usuario};
+
+    this.service
+      .atualizar(lancamento)
+      .then((response) => {
+        this.props.history.push("/consulta-lancamentos");
+        messages.mensagemSucesso("Lançamento atualizado com sucesso");
+      })
+      .catch((error) => {
+        messages.mensagemErro(error.response.data);
+      });
+  };
+
   handleChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
@@ -57,7 +73,16 @@ class CadastroLancamentos extends React.Component {
 
   componentDidMount() {
     const params = this.props.match.params;
-    console.log("params: ", params);
+    if (params.id) {
+      this.service
+        .obterPorId(params.id)
+        .then((response) => {
+          this.setState({ ...response.data });
+        })
+        .catch((error) => {
+          messages.mensagemErro(error.response.data);
+        });
+    }
   }
 
   render() {
@@ -148,6 +173,9 @@ class CadastroLancamentos extends React.Component {
             <div>
               <button className="btn btn-success" onClick={this.submit}>
                 Salvar
+              </button>
+              <button className="btn btn-primary" onClick={this.atualizar}>
+                Atualizar
               </button>
               <button
                 className="btn btn-danger"
